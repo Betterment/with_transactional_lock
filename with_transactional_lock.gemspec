@@ -9,12 +9,12 @@ Gem::Specification.new do |s|
   s.version     = WithTransactionalLock::VERSION
   s.authors     = ["Sam Moore"]
   s.email       = ["sam@betterment.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of WithTransactionalLock."
-  s.description = "TODO: Description of WithTransactionalLock."
+  s.homepage    = "https://github.com/Betterment/with_transactional_lock"
+  s.summary     = "Transactional advisory locks for ActiveRecord"
+  s.description = "Advisory locking support for MySQL and Postgresql done right."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  s.files = Dir["lib/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 4.2"
 end
