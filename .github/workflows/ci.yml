@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_release:
+        description: 'Force a release to run using the current version'
+        default: false
+        required: true
+        type: boolean
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['3.2']
+        gemfile:
+          - gemfiles/rails_7_0.gemfile
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: runner
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: with_transactional_lock_test
+          DB_ADAPTER: postgresql
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: with_transactional_lock_test
+          DB_ADAPTER: mysql
+        ports:
+            - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      env:
+        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Run tests
+      env:
+        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+      run: bundle exec rake
+  publish:
+    needs: build
+    if: needs.build.result == 'success' && (github.event_name == 'push' || inputs.force_release)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: Betterment/workflows/gem_release@gem_release-v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          betterment_gh_packages_pat: ${{ secrets.BETTERMENT_GH_PACKAGES_PAT }}
+          force: ${{ toJSON(inputs.force_release) }}

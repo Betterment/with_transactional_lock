@@ -1,0 +1,14 @@
+inherit_gem:
+  betterlint:
+    - config/default.yml
+
+AllCops:
+  TargetRubyVersion: 3.2
+
+Gemspec/DevelopmentDependencies:
+  Enabled: true
+  EnforcedStyle: gemspec
+
+Naming/VariableNumber:
+  Enabled: true
+  AllowedIdentifiers: mysql2

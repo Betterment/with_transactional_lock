@@ -1,0 +1,8 @@
+*******************************************************************************
+
+If you're using MySql, then run `rake db:migrate` to setup the `transactional_advisory_locks`
+table.
+
+If you're using Postgresql, then you're all set!
+
+*******************************************************************************

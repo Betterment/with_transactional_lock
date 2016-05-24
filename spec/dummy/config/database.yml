@@ -1,0 +1,35 @@
+default: &default
+  pool: 50
+  timeout: 5000
+
+postgresql:
+  development: &pg_default
+    <<: *default
+    adapter: 'postgresql'
+    database: 'with_transactional_lock_development'
+  test: &pg_test
+    <<: *default
+    adapter: 'postgresql'
+    database: 'with_transactional_lock_test'
+
+mysql:
+  development: &mysql_default
+    <<: *default
+    adapter: 'mysql2'
+    encoding: 'utf8mb4'
+    host: '127.0.0.1'
+    username: 'root'
+    database: 'with_transactional_lock_development'
+  test: &mysql_test
+    <<: *default
+    adapter: 'mysql2'
+    encoding: 'utf8mb4'
+    host: '127.0.0.1'
+    username: 'root'
+    database: 'with_transactional_lock_test'
+
+development:
+  <<: *mysql_default
+
+test:
+  <<: *mysql_test
