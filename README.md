@@ -50,6 +50,15 @@ And then bundle install:
 $ bundle install
 ```
 
+And then if you're using MySQL, you will need to run the installer:
+
+```
+$ rails g with_transactional_lock:install
+```
+
+This will create a migration that will add an `advisory_locks` table to 
+your database.
+
 ## Usage
 
 ```ruby
