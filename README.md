@@ -62,7 +62,7 @@ your database.
 ## Usage
 
 ```ruby
-SomeModel.with_transactional_lock('name_of_a_resource') do
+ActiveRecord::Base.with_transactional_lock('name_of_a_resource') do
   # do something critical in here
   # this block is already inside a transaction
 end
