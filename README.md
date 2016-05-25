@@ -1,6 +1,39 @@
 # with_transactional_lock
 
-What is this gem?
+A simple extension to ActiveRecord for performing advisory locking on
+MySQL and Postgresql.
+
+An advisory lock is a database-level mutex that can be used to prevent
+concurrent access to a shared resource or to prevent two workers from
+performing the same process concurrently.
+
+This gem is different from other advisory locking gems because it
+guarantees that the advisory lock is acquired within a transaction and
+is released at the commit or rollback of that transaction.
+
+Advisory transaction locks have these nice properties:
+
+* they releases at the close of a transaction
+* they hold the lock until your critical section has completed and no
+  longer, which means they co-transactionally release when you've done
+  whatever mutative things you meant to be doing and your new
+  state-of-the-world is visible to others
+
+Additionally, this gem does not use a try-based approach to lock
+acquisition.
+
+A non-try based strategy has these properties:
+
+* they will wait until the lock can be acquired instead of immediately
+  returning false and forcing the application code to have to retry
+* they will wait in line or the lock, so you get fairness in the
+  acquisition sequence
+
+In contrast, when using a try-based strategy your ability to acquire 
+a lock will get worse at higher levels of concurrency. You'll spend 
+more time spinning in application code issuing requests for a lock
+instead of waiting on I/O (possibly allowing another thread to use the
+CPU).
 
 ## Installation
 
@@ -25,7 +58,13 @@ SomeModel.with_transactional_lock('name_of_a_resource') do
 end
 ```
 
-While inside the block you have exclusive access to 
+The above call with attempt to acquire an exclusive lock on the lock
+name provided. It will wait indefinitely for that lock -- or at least as
+long as your database connection timeout is willing to allow. Once the
+lock is acquired you will have exclusive ownership of the advisory lock
+with the name that you provided. Your block is free to execute it's
+critical work. Upon completion of your block, the transaction will be
+committed and the lock will be released.
 
 ## Supported databases
 
