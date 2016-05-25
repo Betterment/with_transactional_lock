@@ -6,21 +6,25 @@ postgresql:
   development: &pg_default
     <<: *default
     adapter: 'postgresql'
-    url: 'postgresql://localhost:15432/with_transactional_lock_development'
+    database: 'with_transactional_lock_development'
   test: &pg_test
     <<: *default
     adapter: 'postgresql'
-    url: 'postgresql://localhost:15432/with_transactional_lock_test'
+    database: 'with_transactional_lock_test'
 
 mysql:
   development: &mysql_default
     <<: *default
     adapter: 'mysql2'
-    url: 'mysql2://127.0.0.1/with_transactional_lock_development'
+    host: '127.0.0.1'
+    username: 'root'
+    database: 'with_transactional_lock_development'
   test: &mysql_test
     <<: *default
     adapter: 'mysql2'
-    url: 'mysql2://127.0.0.1/with_transactional_lock_test'
+    host: '127.0.0.1'
+    username: 'root'
+    database: 'with_transactional_lock_test'
 
 development:
   <<: *mysql_default
