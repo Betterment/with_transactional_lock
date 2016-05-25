@@ -24,46 +24,62 @@ describe WithTransactionalLock do
     expect(Widget.first.name).to eq 'oncetwice'
   end
 
-  describe 'concurrency protection' do
-    context 'with locking' do
-      it 'creates no duplicate resoucres' do
-        work_work_work_work_work(times: 5, with_lock: true)
-        expect(Widget.count).to eq 5
-      end
+  context 'concurrency prevention' do
+    it "waits with locking enabled" do
+      expect(waited_for_lock?(true)).to eq true
     end
 
-    context 'without locking' do
-      it 'creates duplicate resources' do
-        work_work_work_work_work(times: 5, with_lock: false)
-        expect(Widget.count).to be > 5
-      end
+    it "doesn't wait with locking disabled" do
+      expect(waited_for_lock?(false)).to eq false
     end
-  end
 
-  def work_work_work_work_work(opts={})
-    iterations = opts.fetch(:times)
-    with_lock = opts.fetch(:with_lock)
-    [].tap do |ary|
-      iterations.times do
-        iterations.times do |i|
-          ary << Thread.new do
-            sleep
-            ActiveRecord::Base.connection_pool.with_connection do
-              if with_lock
-                Widget.with_transactional_lock('Widget.first') do
-                  Widget.where(name: "widget #{i}").first_or_create
-                end
-              else
-                Widget.where(name: "widget #{i}").first_or_create
-              end
-            end
-          end
+    def maybe_transactional_lock(enabled, &block)
+      ActiveRecord::Base.connection_pool.with_connection do
+        if enabled
+          ActiveRecord::Base.with_transactional_lock("foo_bar", &block)
+        else
+          ActiveRecord::Base.transaction(&block)
         end
       end
-      until ary.all? { |t| t.status == 'sleep' }
-        sleep(0.1)
+    end
+
+    def waited_for_lock?(locking_enabled)
+      mutex = Mutex.new
+      widget_created = ConditionVariable.new
+      threads = []
+      result = nil
+
+      threads << Thread.new do
+        mutex.lock
+        maybe_transactional_lock(locking_enabled) do
+          puts "1: waiting"
+          widget_created.wait(mutex)
+          puts "4: waited"
+          Widget.find_by!(name: "foo").destroy
+          mutex.unlock
+          sleep 1
+        end
       end
-      ary.each(&:wakeup).each(&:join)
+
+      threads << Thread.new do
+        sleep # must wait for thread_a to acquire mutex
+        mutex.lock
+        Widget.create!(name: "foo")
+        puts "2: signal"
+        widget_created.signal
+        puts "3: signaled"
+        mutex.unlock
+        maybe_transactional_lock(locking_enabled) do
+          result = Widget.where(name: "foo").empty?
+        end
+      end
+
+      # sleeping the second thread roughly ensures that the first thread will run first
+      sleep(0.1) until threads[1].status == 'sleep'
+      threads[1].wakeup
+
+      threads.each(&:join)
+      result
     end
   end
 end
