@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/Betterment/with_transactional_lock.svg?token=6b6DErRMUHX47kEoBZ3t&branch=master)](https://travis-ci.com/Betterment/with_transactional_lock)
 
 A simple extension to ActiveRecord for performing advisory locking on
-MySQL and Postgresql.
+MySQL and PostgreSQL.
 
 An advisory lock is a database-level mutex that can be used to prevent
 concurrent access to a shared resource or to prevent two workers from
@@ -14,7 +14,6 @@ uses advisory transaction locks.
 
 Advisory transaction locks have these nice properties:
 
-* they releases at the close of a transaction
 * they hold the lock until your critical section has completed and no
   longer, which means they co-transactionally release when you've done
   whatever mutative things you meant to be doing and your new
@@ -68,19 +67,19 @@ ActiveRecord::Base.with_transactional_lock('name_of_a_resource') do
 end
 ```
 
-The above call with attempt to acquire an exclusive lock on the lock
-name provided. It will wait indefinitely for that lock -- or at least as
+This call will attempt to acquire an exclusive lock using the provided 
+lock name. It will wait indefinitely for that lock -- or at least as
 long as your database connection timeout is willing to allow. Once the
 lock is acquired you will have exclusive ownership of the advisory lock
-with the name that you provided. Your block is free to execute it's
-critical work. Upon completion of your block, the transaction will be
-committed and the lock will be released.
+with the name that you provided. Your block is free to execute its
+critical work. Upon completion of your transaction, the lock will be 
+released.
 
 ## Supported databases
 
-### Postgresl
+### PostgreSQL
 
-Postgres has first-class support for transactional advisory locks via
+PostgreSQL has first-class support for transactional advisory locks via
 `pg_advisory_xact_lock`. This is an exclusive lock that is held for the
 duration of a given transaction and automatically released upon
 transaction commit.
@@ -88,10 +87,10 @@ transaction commit.
 ### MySQL
 
 MySQL does not have built-in support for transactional advisory locks.
-So, MySQL gets a special treatment. We emulate the behavior of postgres
+So, MySQL gets a special treatment. We emulate the behavior of PostgreSQL
 using a special `advisory_locks` table with a unique index on the `name`
 column. This allows us to provide the same transactional and mutual
-exclusivity guarantees as postgres. The trade-off is that you need to
+exclusivity guarantees as PostgreSQL. The trade-off is that you need to
 add another table to your database, and that table will slowly
 accumulate rows. You can cull the table with whatever frequency you
 like.
