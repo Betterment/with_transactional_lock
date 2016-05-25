@@ -4,8 +4,8 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
 Rails.configuration.database_configuration[db_adapter][rails_env].tap do |c|
   ActiveRecord::Base.establish_connection(c)
-  ActiveRecord::Tasks::DatabaseTasks.drop(c) if db_adapter == 'mysql'
   ActiveRecord::Tasks::DatabaseTasks.create(c)
+  ActiveRecord::Base.establish_connection(c)
   load File.expand_path("../dummy/db/schema.rb",  __FILE__)
 end
 
