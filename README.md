@@ -8,8 +8,7 @@ concurrent access to a shared resource or to prevent two workers from
 performing the same process concurrently.
 
 This gem is different from other advisory locking gems because it
-guarantees that the advisory lock is acquired within a transaction and
-is released at the commit or rollback of that transaction.
+uses advisory transaction locks.
 
 Advisory transaction locks have these nice properties:
 
