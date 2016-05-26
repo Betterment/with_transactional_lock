@@ -94,4 +94,4 @@ like.
 
 ## License
 
-Any contributions made to this project are covered under the MIT License, found [here](MIT-LICENSE)
+Any contributions made to this project are covered under the MIT License, found [here](LICENSE)
