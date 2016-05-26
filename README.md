@@ -12,14 +12,13 @@ performing the same process concurrently.
 This gem is different from other advisory locking gems because it
 uses advisory transaction locks instead of advisory session locks. 
 Advisory transaction locks only hold the lock until your critical 
-section has completed and no longer, which means they co-transactionally 
-release when you've done whatever mutative things you meant to be doing 
-and your new state-of-the-world is visible to others.
+section has completed and no longer. Concretely, this means that the 
+lock is co-transactionally released when you commit your transaction 
+-- i.e. when you've done whatever mutative things you meant to be 
+doing and your new state-of-the-world is visible to others.
 
 Additionally, this gem does not use a try-based approach to lock
-acquisition.
-
-A non-try based strategy has these properties:
+acquisition which has these properties:
 
 * it will wait until the lock can be acquired instead of immediately
   returning false and forcing the application code to have to retry
@@ -27,7 +26,7 @@ A non-try based strategy has these properties:
   acquisition sequence
 
 In contrast, when using a try-based strategy your ability to acquire 
-a lock will get worse at higher levels of concurrency. You'll spend 
+a lock can get worse at higher levels of concurrency. You may spend 
 more time spinning in application code issuing requests for a lock
 instead of waiting on I/O (possibly allowing another thread to use the
 CPU).
