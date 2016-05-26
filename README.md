@@ -18,12 +18,10 @@ lock is co-transactionally released when you commit your transaction
 doing and your new state-of-the-world is visible to others.
 
 Additionally, this gem does not use a try-based approach to lock
-acquisition which has these properties:
-
-* it will wait until the lock can be acquired instead of immediately
-  returning false and forcing the application code to have to retry
-* it will wait in line or the lock, so you get fairness in the
-  acquisition sequence
+acquisition. It will wait until the lock can be acquired instead of 
+immediately returning false and forcing the application code manage 
+retry behavior. Additionally, by waiting in line for locks that cannot 
+be immediately acquired, you get fairness in the acquisition sequence.
 
 In contrast, when using a try-based strategy your ability to acquire 
 a lock can get worse at higher levels of concurrency. You may spend 
