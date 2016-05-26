@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "Advisory locking support for MySQL and Postgresql done right."
   s.license     = "MIT"
 
-  s.files = Dir["lib/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  s.files = Dir["lib/**/*", "LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 4.2"
 end
