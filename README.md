@@ -10,23 +10,20 @@ concurrent access to a shared resource or to prevent two workers from
 performing the same process concurrently.
 
 This gem is different from other advisory locking gems because it
-uses advisory transaction locks.
-
-Advisory transaction locks have these nice properties:
-
-* they hold the lock until your critical section has completed and no
-  longer, which means they co-transactionally release when you've done
-  whatever mutative things you meant to be doing and your new
-  state-of-the-world is visible to others
+uses advisory transaction locks instead of advisory session locks. 
+Advisory transaction locks only hold the lock until your critical 
+section has completed and no longer, which means they co-transactionally 
+release when you've done whatever mutative things you meant to be doing 
+and your new state-of-the-world is visible to others.
 
 Additionally, this gem does not use a try-based approach to lock
 acquisition.
 
 A non-try based strategy has these properties:
 
-* they will wait until the lock can be acquired instead of immediately
+* it will wait until the lock can be acquired instead of immediately
   returning false and forcing the application code to have to retry
-* they will wait in line or the lock, so you get fairness in the
+* it will wait in line or the lock, so you get fairness in the
   acquisition sequence
 
 In contrast, when using a try-based strategy your ability to acquire 
@@ -97,4 +94,4 @@ like.
 
 ## License
 
-This project rocks and uses MIT-LICENSE.
+Any contributions made to this project are covered under the MIT License, found [here](MIT-LICENSE)
