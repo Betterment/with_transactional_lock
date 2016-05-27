@@ -19,7 +19,7 @@ doing and your new state-of-the-world is visible to others.
 
 Additionally, this gem does not use a try-based approach to lock
 acquisition. It will wait until the lock can be acquired instead of 
-immediately returning false and forcing the application code manage 
+immediately returning false and forcing the application code to manage 
 retry behavior. Additionally, by waiting in line for locks that cannot 
 be immediately acquired, you get fairness in the acquisition sequence.
 
