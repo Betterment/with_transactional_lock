@@ -7,7 +7,7 @@ describe WithTransactionalLock do
 
   after do
     Widget.delete_all
-    ActiveRecord::Base.connection.execute('delete from advisory_locks') if ENV['DB_ADAPTER'] == 'mysql'
+    WithTransactionalLock::MySqlHelper.cleanup if ENV['DB_ADAPTER'] == 'mysql'
   end
 
   it 'allows claiming the same lock twice' do
@@ -63,12 +63,12 @@ describe WithTransactionalLock do
 
       threads << Thread.new do
         sleep # must wait for thread_a to acquire mutex
-        mutex.lock
-        Widget.create!(name: "foo")
-        puts "2: signal"
-        widget_created.signal
-        puts "3: signaled"
-        mutex.unlock
+        mutex.synchronize do
+          Widget.create!(name: "foo")
+          puts "2: signal"
+          widget_created.signal
+          puts "3: signaled"
+        end
         maybe_transactional_lock(locking_enabled) do
           result = Widget.where(name: "foo").empty?
         end

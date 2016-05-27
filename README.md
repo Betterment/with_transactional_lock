@@ -89,6 +89,18 @@ add another table to your database, and that table will slowly
 accumulate rows. You can cull the table with whatever frequency you
 like.
 
+In order to ease the culling of the `advisory_locks` table for the MySQL
+implementation, there is a helper:
+
+```ruby
+WithTransactionalLock::MySqlHelper.cleanup
+```
+
+This helper will perform batch deletions of the `advisory_locks` table
+in a loop until it deletes at least the amount of locks that were in the
+table when it started -- i.e. it does not guarantee that it will empty
+the table.
+
 ## License
 
 Any contributions made to this project are covered under the MIT License, found [here](LICENSE)
