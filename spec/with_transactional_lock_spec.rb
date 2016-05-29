@@ -30,7 +30,7 @@ describe WithTransactionalLock do
     end
 
     it "doesn't wait consistently with locking enabled and distinct lock names" do
-      expect(10.times.any? { waited_for_lock?(locking_enabled: true, distinct_lock_names: true) == false }).to eq true
+      expect(5.times.all? { waited_for_lock?(locking_enabled: true, distinct_lock_names: true) }).not_to eq true
     end
 
     it "doesn't wait with locking disabled" do
