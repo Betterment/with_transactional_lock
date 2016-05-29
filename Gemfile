@@ -11,3 +11,4 @@ gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby
 gem 'rspec-rails', '~> 3.1'
 gem 'travis'
 gem 'mime-types', '< 3'
+gem 'rspec-retry'
