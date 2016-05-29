@@ -25,8 +25,18 @@ describe WithTransactionalLock do
   end
 
   context 'concurrency prevention' do
-    it "waits with locking enabled and the same lock name" do
-      expect(waited_for_lock?(locking_enabled: true, distinct_lock_names: false)).to eq true
+    context 'just to be sure...' do
+      it "waits with locking enabled and the same lock name" do
+        expect(waited_for_lock?(locking_enabled: true, distinct_lock_names: false)).to eq true
+      end
+
+      it "waits agan with locking enabled and the same lock name" do
+        expect(waited_for_lock?(locking_enabled: true, distinct_lock_names: false)).to eq true
+      end
+
+      it "waits yet again with locking enabled and the same lock name" do
+        expect(waited_for_lock?(locking_enabled: true, distinct_lock_names: false)).to eq true
+      end
     end
 
     it "doesn't wait consistently with locking enabled and distinct lock names", retry: 3 do
