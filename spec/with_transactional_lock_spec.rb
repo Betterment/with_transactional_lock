@@ -49,7 +49,7 @@ describe WithTransactionalLock do
 
     def waited_for_lock?(opts)
       locking_enabled = opts[:locking_enabled]
-      raise("must provide locking_enabled: option") if opts[:locking_enabled].nil?
+      raise("must provide locking_enabled: option") if locking_enabled.nil?
 
       raise("must provide distinct_lock_names: option if locking is enabled") if locking_enabled && opts[:distinct_lock_names].nil?
 
