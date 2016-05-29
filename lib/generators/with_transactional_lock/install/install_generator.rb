@@ -7,6 +7,10 @@ module WithTransactionalLock
       include Rails::Generators::Migration
       source_root File.expand_path('../templates', __FILE__)
 
+      def show_readme
+        readme 'README'
+      end
+
       def create_with_transactional_lock_migration
         if mysql?
           migration_template(
