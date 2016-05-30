@@ -5,11 +5,6 @@ describe WithTransactionalLock do
     ActiveRecord::Base.connection.reconnect!
   end
 
-  after do
-    Widget.delete_all
-    WithTransactionalLock::MySqlHelper.cleanup if ENV['DB_ADAPTER'] == 'mysql'
-  end
-
   it 'allows claiming the same lock twice' do
     Widget.create!(name: 'other')
     Widget.with_transactional_lock('Widget.first') do
@@ -25,12 +20,12 @@ describe WithTransactionalLock do
   end
 
   context 'concurrency prevention' do
-    it "waits with locking enabled and the same lock name" do
-      expect(waited_for_lock?(locking_enabled: true, distinct_lock_names: false)).to eq true
+    it "consistently waits with locking enabled and the same lock name" do
+      3.times { expect(waited_for_lock?(locking_enabled: true, distinct_lock_names: false)).to eq true }
     end
 
-    it "doesn't wait consistently with locking enabled and distinct lock names" do
-      expect(5.times.all? { waited_for_lock?(locking_enabled: true, distinct_lock_names: true) }).not_to eq true
+    it "doesn't wait consistently with locking enabled and distinct lock names", retry: 3 do
+      expect(waited_for_lock?(locking_enabled: true, distinct_lock_names: true)).to eq false
     end
 
     it "doesn't wait with locking disabled" do
