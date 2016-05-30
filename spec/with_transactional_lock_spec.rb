@@ -5,11 +5,6 @@ describe WithTransactionalLock do
     ActiveRecord::Base.connection.reconnect!
   end
 
-  after do
-    Widget.delete_all
-    WithTransactionalLock::MySqlHelper.cleanup if ENV['DB_ADAPTER'] == 'mysql'
-  end
-
   it 'allows claiming the same lock twice' do
     Widget.create!(name: 'other')
     Widget.with_transactional_lock('Widget.first') do
