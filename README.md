@@ -85,21 +85,7 @@ So, MySQL gets a special treatment. We emulate the behavior of PostgreSQL
 using a special `advisory_locks` table with a unique index on the `name`
 column. This allows us to provide the same transactional and mutual
 exclusivity guarantees as PostgreSQL. The trade-off is that you need to
-add another table to your database, and that table will slowly
-accumulate rows. You can cull the table with whatever frequency you
-like.
-
-In order to ease the culling of the `advisory_locks` table for the MySQL
-implementation, there is a helper:
-
-```ruby
-WithTransactionalLock::MySqlHelper.cleanup
-```
-
-This helper will perform batch deletions of the `advisory_locks` table
-in a loop until it deletes at least the amount of locks that were in the
-table when it started -- i.e. it does not guarantee that it will empty
-the table.
+add another table to your database.
 
 ## License
 

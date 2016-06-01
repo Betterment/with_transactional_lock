@@ -52,6 +52,7 @@ module WithTransactionalLock
 
       def acquire_lock
         connection.execute("replace into advisory_locks values (#{connection.quote(lock_name)})")
+        connection.execute("delete from advisory_locks where name = #{connection.quote(lock_name)}")
       end
     end
 
