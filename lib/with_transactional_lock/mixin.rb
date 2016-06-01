@@ -51,7 +51,7 @@ module WithTransactionalLock
       private
 
       def acquire_lock
-        connection.execute("insert into advisory_locks values (#{connection.quote(lock_name)}) on duplicate key update name = name")
+        connection.execute("replace into advisory_locks values (#{connection.quote(lock_name)})")
       end
     end
 
