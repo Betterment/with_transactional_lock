@@ -24,7 +24,7 @@ describe WithTransactionalLock do
       3.times { expect(waited_for_lock?(locking_enabled: true, distinct_lock_names: false)).to eq true }
     end
 
-    it "doesn't wait consistently with locking enabled and distinct lock names", retry: 3 do
+    it "doesn't wait consistently with locking enabled and distinct lock names", retry: 20 do
       expect(waited_for_lock?(locking_enabled: true, distinct_lock_names: true)).to eq false
     end
 
