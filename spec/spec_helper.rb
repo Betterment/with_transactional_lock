@@ -18,6 +18,8 @@ RSpec.configure do |config|
   config.order = :random
 
   config.use_transactional_fixtures = false
+  config.verbose_retry = true
+  config.display_try_failure_messages = true
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :deletion

@@ -1,7 +1,7 @@
 class CreateAdvisoryLocks < ActiveRecord::Migration
   def change
     create_table :advisory_locks, id: false do |t|
-      t.string :name, unique: true, null: false, limit: 128
+      t.integer :lock_id, unique: true, null: false, limit: 8
     end
   end
 end
