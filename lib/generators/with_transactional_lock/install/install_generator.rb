@@ -14,8 +14,8 @@ module WithTransactionalLock
       def create_with_transactional_lock_migration
         if mysql?
           migration_template(
-            'db/migrate/create_advisory_locks.rb',
-            'db/migrate/create_advisory_locks.rb'
+            'db/migrate/create_transactional_advisory_locks.rb',
+            'db/migrate/create_transactional_advisory_locks.rb'
           )
         end
       end
