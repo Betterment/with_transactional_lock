@@ -45,14 +45,20 @@ module WithTransactionalLock
           yield
         end
       end
+
+      private
+
+      def db_lock_name
+        @db_lock_name ||= Digest::SHA256.digest(lock_name)[0, 8].unpack('q').first
+      end
     end
 
     class MySqlAdvisoryLock < AdvisoryLockBase
       private
 
       def acquire_lock
-        connection.execute("replace into advisory_locks values (#{connection.quote(lock_name)})")
-        connection.execute("delete from advisory_locks where name = #{connection.quote(lock_name)}")
+        connection.execute("insert into advisory_locks values (#{connection.quote(db_lock_name)})")
+        connection.execute("delete from advisory_locks where lock_id = #{connection.quote(db_lock_name)}")
       end
     end
 
@@ -61,10 +67,6 @@ module WithTransactionalLock
 
       def acquire_lock
         connection.execute("select pg_advisory_xact_lock(#{connection.quote(db_lock_name)})")
-      end
-
-      def db_lock_name
-        Digest::SHA256.digest(lock_name)[0, 8].unpack('q').first
       end
     end
   end
