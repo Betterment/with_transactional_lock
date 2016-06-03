@@ -49,7 +49,7 @@ And then if you're using MySQL, you will need to run the installer:
 $ rails g with_transactional_lock:install
 ```
 
-This will create a migration that will add an `advisory_locks` table to 
+This will create a migration that will add an `transactional_advisory_locks` table to 
 your database.
 
 ## Usage
@@ -82,10 +82,10 @@ transaction commit.
 
 MySQL does not have built-in support for transactional advisory locks.
 So, MySQL gets a special treatment. We emulate the behavior of PostgreSQL
-using a special `advisory_locks` table with a unique index on the `lock_id`
-column. This allows us to provide the same transactional and mutual
-exclusivity guarantees as PostgreSQL. The trade-off is that you need to
-add another table to your database.
+using a special `transactional_advisory_locks` table with a unique index 
+on the `lock_id` column. This allows us to provide the same transactional 
+and mutual exclusivity guarantees as PostgreSQL. The trade-off is that 
+you need to add another table to your database.
 
 ## License
 

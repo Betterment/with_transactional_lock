@@ -57,8 +57,8 @@ module WithTransactionalLock
       private
 
       def acquire_lock
-        connection.execute("insert into advisory_locks values (#{connection.quote(db_lock_name)})")
-        connection.execute("delete from advisory_locks where lock_id = #{connection.quote(db_lock_name)}")
+        connection.execute("insert into transactional_advisory_locks values (#{connection.quote(db_lock_name)})")
+        connection.execute("delete from transactional_advisory_locks where lock_id = #{connection.quote(db_lock_name)}")
       end
     end
 

@@ -4,9 +4,9 @@ ActiveRecord::Schema.define do
   end
 
   if ActiveRecord::Base.connection.adapter_name.downcase =~ /mysql/
-    create_table "advisory_locks", id: false, force: :cascade do |t|
+    create_table "transactional_advisory_locks", id: false, force: :cascade do |t|
       t.integer "lock_id", limit: 8
     end
-    add_index "advisory_locks", ["lock_id"], name: "index_advisory_locks_on_lock_id", unique: true
+    add_index "transactional_advisory_locks", ["lock_id"], name: "index_transactional_advisory_locks_on_lock_id", unique: true
   end
 end
