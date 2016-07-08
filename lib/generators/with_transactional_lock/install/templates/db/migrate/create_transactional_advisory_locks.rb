@@ -1,4 +1,4 @@
-class CreateAdvisoryLocks < ActiveRecord::Migration
+class CreateTransactionalAdvisoryLocks < ActiveRecord::Migration
   def change
     create_table :transactional_advisory_locks, id: false do |t|
       t.integer :lock_id, unique: true, null: false, limit: 8
