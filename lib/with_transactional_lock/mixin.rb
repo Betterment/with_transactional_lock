@@ -21,12 +21,12 @@ module WithTransactionalLock
       def self.locate(connection)
         adapter = connection.adapter_name.downcase.to_sym
         case adapter
-        when :mysql, :mysql2
-          MySqlAdvisoryLock
-        when :postgresql
-          PostgresAdvisoryLock
-        else
-          raise "adapter not supported: #{adapter}"
+          when :mysql, :mysql2
+            MySqlAdvisoryLock
+          when :postgresql
+            PostgresAdvisoryLock
+          else
+            raise "adapter not supported: #{adapter}"
         end
       end
     end

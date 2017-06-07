@@ -32,4 +32,3 @@ module WithTransactionalLock
     end
   end
 end
-

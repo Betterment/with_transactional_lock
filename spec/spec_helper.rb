@@ -6,7 +6,7 @@ Rails.configuration.database_configuration[db_adapter][rails_env].tap do |c|
   ActiveRecord::Base.establish_connection(c)
   ActiveRecord::Tasks::DatabaseTasks.create(c)
   ActiveRecord::Base.establish_connection(c)
-  load File.expand_path("../dummy/db/schema.rb",  __FILE__)
+  load File.expand_path("../dummy/db/schema.rb", __FILE__)
 end
 
 require 'rspec/rails'

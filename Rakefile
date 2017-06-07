@@ -24,7 +24,12 @@ if Rails.env.development? || Rails.env.test?
   if defined? Dummy
     require 'rspec/core'
     require 'rspec/core/rake_task'
+    require 'rubocop/rake_task'
+
+    RuboCop::RakeTask.new
     RSpec::Core::RakeTask.new(:spec)
-    task default: :spec
+
+    task(:default).clear
+    task default: %i(rubocop spec)
   end
 end

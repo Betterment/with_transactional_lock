@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+git_source(:private_git) { |repo_name| "https://betterment-deploy:de4372bdef0377c76679aabdcea71a92fbf467ab@github.com/#{repo_name}" }
 
 gemspec
 
@@ -13,3 +14,5 @@ gem 'travis'
 gem 'mime-types', '< 3'
 gem 'rspec-retry'
 gem 'database_cleaner'
+
+gem 'rubocop-betterment', private_git: 'Betterment/rubocop-betterment', require: false
