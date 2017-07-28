@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-git_source(:private_git) { |repo_name| "https://betterment-deploy:823e1e8cb95139adf333f730626dc5a05fb26046@github.com/#{repo_name}" }
+git_source(:private_git) { |repo_name| "https://betterment-deploy:131710657effc1750427767a7cb33ca2fffc30ed@github.com/#{repo_name}" }
 
 gemspec
 
