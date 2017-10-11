@@ -10,6 +10,9 @@ Rails.configuration.database_configuration[db_adapter][rails_env].tap do |c|
 end
 
 require 'rspec/rails'
+require 'rspec/retry'
+require 'mime-types'
+require 'database_cleaner'
 
 class Widget < ActiveRecord::Base
 end

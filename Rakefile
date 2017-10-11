@@ -30,6 +30,12 @@ if Rails.env.development? || Rails.env.test?
     RSpec::Core::RakeTask.new(:spec)
 
     task(:default).clear
-    task default: %i(rubocop spec)
+    if ENV['APPRAISAL_INITIALIZED'] || ENV['TRAVIS']
+      task default: %i(rubocop spec)
+    else
+      require 'appraisal'
+      Appraisal::Task.new
+      task default: :appraisal
+    end
   end
 end

@@ -16,5 +16,12 @@ Gem::Specification.new do |s|
 
   s.files = Dir["lib/**/*", "LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~> 4.2"
+  s.add_dependency "rails", ">= 4.2", "< 6"
+
+  s.add_development_dependency 'appraisal', '~> 2.2.0'
+  s.add_development_dependency 'rspec-rails', '~> 3.1'
+  s.add_development_dependency 'travis'
+  s.add_development_dependency 'mime-types', '< 3'
+  s.add_development_dependency 'rspec-retry'
+  s.add_development_dependency 'database_cleaner'
 end
