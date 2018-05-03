@@ -2,11 +2,10 @@
 
 source "https://rubygems.org"
 
-gem "pg", platforms: :ruby
-gem "mysql2", platforms: :ruby
-gem "activerecord-jdbcmysql-adapter", platforms: :jruby
-gem "activerecord-jdbcpostgresql-adapter", platforms: :jruby
-gem "rubocop-betterment", require: false, git: "https://betterment-deploy:131710657effc1750427767a7cb33ca2fffc30ed@github.com/Betterment/rubocop-betterment"
+gem "pg", "0.21.0", platforms: :ruby
+gem "mysql2", "0.4.9", platforms: :ruby
+gem "activerecord-jdbcmysql-adapter", "~> 1.3", platforms: :jruby
+gem "activerecord-jdbcpostgresql-adapter", "~> 1.3", platforms: :jruby
 gem "rails", "~> 4.2.6"
 
 gemspec path: "../"
