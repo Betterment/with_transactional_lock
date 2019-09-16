@@ -13,7 +13,7 @@ module WithTransactionalLock
       private
 
       def _advisory_lock_class
-        @_advisory_lock_class ||= AdvisoryLockClassLocator.locate(connection)
+        @_advisory_lock_class ||= AdvisoryLockClassLocator.locate(connection) # rubocop:disable Naming/MemoizedInstanceVariableName
       end
     end
 
@@ -49,7 +49,7 @@ module WithTransactionalLock
       private
 
       def db_lock_name
-        @db_lock_name ||= Digest::SHA256.digest(lock_name)[0, 8].unpack('q').first
+        @db_lock_name ||= Digest::SHA256.digest(lock_name)[0, 8].unpack1('q')
       end
     end
 
