@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "Transactional advisory locks for ActiveRecord"
   s.description = "Advisory locking support for MySQL and Postgresql done right."
   s.license     = "MIT"
+  s.metadata['allowed_push_host'] = 'https://rubygems.pkg.github.com/betterment'
 
   s.files = Dir["lib/**/*", "LICENSE", "Rakefile", "README.md"]
 
@@ -26,5 +27,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails', '~> 3.1'
   s.add_development_dependency 'rspec-retry'
   s.add_development_dependency 'rubocop-betterment'
+  s.add_development_dependency 'sprockets', '~> 3.0'
   s.add_development_dependency 'travis'
 end
