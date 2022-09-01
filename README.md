@@ -106,25 +106,7 @@ released.
 
 If you make changes to this gem, you will need to publish the changes to a new version on Github Packages, where the private Betterment RubyGems registry is. 
 
-You will first need to authenticate to Github Packages. 
-
-You would create or edit a `~/.gem/credentials` to include the following, replacing TOKEN with your personal access token (with these permissions)[https://docs.github.com/en/packages/learn-github-packages/about-permissions-for-github-packages#about-scopes-and-permissions-for-package-registries].
-
-```
----
-:github: Bearer TOKEN
-```
-
-You will need to authenticate with Bundler as well. This step will not be necessary if you have already completed the latest Bootstrap, which authenticates you to Bundler: 
-
-```
-bundle config https://rubygems.pkg.github.com/OWNER USERNAME:GITHUB_PERSONAL_ACCESS_TOKEN
-```
-
-Publish!
-```
-rake release
-```
+For instructions on how to publish this gem, read this article on ["Publishing Internal Gems" from the Betterment Engineering Wiki](https://betterconfluence.atlassian.net/wiki/spaces/BetterEng/pages/2840952833/Publishing+Internal+Gems).
 
 ## Supported databases
 
