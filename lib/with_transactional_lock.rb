@@ -7,5 +7,5 @@ module WithTransactionalLock
 end
 
 ActiveSupport.on_load :active_record do
-  ActiveRecord::Base.send :include, WithTransactionalLock::Mixin
+  ActiveRecord::Base.include WithTransactionalLock::Mixin
 end

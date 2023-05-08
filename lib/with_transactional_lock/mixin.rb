@@ -13,7 +13,7 @@ module WithTransactionalLock
       private
 
       def _advisory_lock_class
-        @_advisory_lock_class ||= AdvisoryLockClassLocator.locate(connection) # rubocop:disable Naming/MemoizedInstanceVariableName
+        @_advisory_lock_class ||= AdvisoryLockClassLocator.locate(connection)
       end
     end
 

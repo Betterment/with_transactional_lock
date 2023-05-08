@@ -17,16 +17,16 @@ Gem::Specification.new do |s|
 
   s.files = Dir["lib/**/*", "LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", ">= 5.1", "< 7"
+  s.add_dependency "rails", ">= 6.0", "< 7.1"
 
   s.add_development_dependency 'appraisal', '~> 2.2.0'
+  s.add_development_dependency 'betterlint'
   s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'mime-types', '< 3'
-  s.add_development_dependency 'mysql2', '0.4.5'
-  s.add_development_dependency 'pg', '~> 0.1'
+  s.add_development_dependency 'mime-types'
+  s.add_development_dependency 'mysql2'
+  s.add_development_dependency 'pg'
   s.add_development_dependency 'rspec-rails', '~> 3.1'
   s.add_development_dependency 'rspec-retry'
-  s.add_development_dependency 'rubocop-betterment'
   s.add_development_dependency 'sprockets', '~> 3.0'
   s.add_development_dependency 'travis'
 end

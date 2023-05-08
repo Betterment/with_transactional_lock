@@ -1,9 +1,9 @@
 inherit_gem:
-  rubocop-betterment:
+  betterlint:
     - config/default.yml
 
 inherit_from:
   - .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.4.2
+  TargetRubyVersion: 2.7.5

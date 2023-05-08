@@ -20,22 +20,22 @@ load 'rails/tasks/statistics.rake'
 
 Bundler::GemHelper.install_tasks
 
-if Rails.env.development? || Rails.env.test?
-  if defined? Dummy
-    require 'rspec/core'
-    require 'rspec/core/rake_task'
-    require 'rubocop/rake_task'
+if (Rails.env.development? || Rails.env.test?) && defined? Dummy
+  require 'rspec/core'
+  require 'rspec/core/rake_task'
+  require 'rubocop/rake_task'
 
-    RuboCop::RakeTask.new
-    RSpec::Core::RakeTask.new(:spec)
+  RuboCop::RakeTask.new
+  RSpec::Core::RakeTask.new(:spec)
 
-    task(:default).clear
-    if ENV['APPRAISAL_INITIALIZED'] || ENV['TRAVIS']
-      task default: %i(rubocop spec)
-    else
-      require 'appraisal'
-      Appraisal::Task.new
-      task default: :appraisal
-    end
+  task(:default).clear
+  if ENV['APPRAISAL_INITIALIZED'] || ENV['CI']
+    tasks += [:rubocop] unless ENV['CI']
+
+    task default: tasks
+  else
+    require 'appraisal'
+    Appraisal::Task.new
+    task default: :appraisal
   end
 end
