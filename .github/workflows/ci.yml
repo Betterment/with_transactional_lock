@@ -1,16 +1,9 @@
 name: CI
 
 on:
-  workflow_dispatch:
-    inputs:
-      force_release:
-        description: 'Force a release to run using the current version'
-        default: false
-        required: true
-        type: boolean
   push:
     branches:
-      - master
+      - main
   pull_request:
 
 jobs:
@@ -61,15 +54,3 @@ jobs:
       env:
         BUNDLE_GEMFILE: ${{ matrix.gemfile }}
       run: bundle exec rake
-  publish:
-    needs: build
-    if: needs.build.result == 'success' && (github.event_name == 'push' || inputs.force_release)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - uses: Betterment/workflows/gem_release@gem_release-v6
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          betterment_gh_packages_pat: ${{ secrets.BETTERMENT_GH_PACKAGES_PAT }}
-          force: ${{ toJSON(inputs.force_release) }}

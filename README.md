@@ -1,7 +1,5 @@
 # with_transactional_lock
 
-[![Build Status](https://travis-ci.com/Betterment/with_transactional_lock.svg?token=6b6DErRMUHX47kEoBZ3t&branch=master)](https://travis-ci.com/Betterment/with_transactional_lock)
-
 A simple extension to ActiveRecord for performing advisory locking on
 MySQL and PostgreSQL.
 
