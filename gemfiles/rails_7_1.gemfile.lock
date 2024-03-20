@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    with_transactional_lock (2.1.0)
+    with_transactional_lock (2.2.0)
       rails (>= 7.0, < 7.2)
 
 GEM
