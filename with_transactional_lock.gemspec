@@ -31,7 +31,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails', '~> 3.1'
   s.add_development_dependency 'rspec-retry'
   s.add_development_dependency 'sprockets', '~> 3.0'
-  s.add_development_dependency 'travis'
 
   s.required_ruby_version = '>= 3.2'
 end
