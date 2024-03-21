@@ -5,6 +5,7 @@ db_adapter = ENV['DB_ADAPTER'] ||= 'postgresql'
 require File.expand_path("dummy/config/environment.rb", __dir__)
 
 Rails.configuration.database_configuration[db_adapter][rails_env].tap do |c|
+  ActiveRecord::Base.establish_connection(c)
   ActiveRecord::Tasks::DatabaseTasks.create(c)
   ActiveRecord::Base.establish_connection(c)
   load File.expand_path("dummy/db/schema.rb", __dir__)
