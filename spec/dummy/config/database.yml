@@ -10,6 +10,10 @@ postgresql:
   test: &pg_test
     <<: *default
     adapter: 'postgresql'
+    username: <%= ENV['POSTGRES_USER'] %>
+    password: <%= ENV['POSTGRES_PASSWORD'] %>
+    host: <%= ENV['POSTGRES_HOST'] %>
+    password: postgres
     database: 'with_transactional_lock_test'
 
 mysql:
