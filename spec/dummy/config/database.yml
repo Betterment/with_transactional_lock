@@ -11,7 +11,7 @@ postgresql:
     <<: *default
     adapter: 'postgresql'
     username: <%= ENV['POSTGRES_USER'] %>
-    host: <%= ENV['POSTGRES_HOST'] %>
+    host: localhost
     database: 'with_transactional_lock_test'
 
 mysql:
