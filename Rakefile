@@ -32,6 +32,7 @@ if (Rails.env.development? || Rails.env.test?) && defined? Dummy
 
   task(:default).clear
   if ENV['APPRAISAL_INITIALIZED'] || ENV['CI']
+    tasks = [:spec]
     tasks += [:rubocop] unless ENV['CI']
 
     task default: tasks # rubocop:disable Rake/DuplicateTask
