@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.summary     = "Transactional advisory locks for ActiveRecord"
   s.description = "Advisory locking support for MySQL and Postgresql done right."
   s.license     = "MIT"
-  s.metadata['allowed_push_host'] = 'https://rubygems.pkg.github.com/betterment'
+  s.metadata['allowed_push_host'] = 'https://rubygems.org'
   s.metadata['rubygems_mfa_required'] = 'true' # in case we ever use rubygems
 
   s.files = Dir["lib/**/*", "LICENSE", "Rakefile", "README.md"]
