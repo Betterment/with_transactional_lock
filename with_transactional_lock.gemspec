@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mime-types'
   s.add_development_dependency 'mysql2'
   s.add_development_dependency 'pg'
-  s.add_development_dependency 'rspec-rails', '~> 3.1'
+  s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'rspec-retry'
 
   s.required_ruby_version = '>= 3.2'
