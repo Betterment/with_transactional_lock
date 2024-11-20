@@ -2,8 +2,14 @@ inherit_gem:
   betterlint:
     - config/default.yml
 
+inherit_mode:
+  merge:
+    - Exclude
+
 AllCops:
   TargetRubyVersion: 3.2
+  Exclude:
+    - gemfiles/*.gemfile
 
 Gemspec/DevelopmentDependencies:
   Enabled: true

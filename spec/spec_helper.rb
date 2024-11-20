@@ -2,7 +2,7 @@
 
 rails_env = ENV['RAILS_ENV'] ||= 'test'
 db_adapter = ENV['DB_ADAPTER'] ||= 'postgresql'
-require File.expand_path("dummy/config/environment.rb", __dir__)
+require_relative 'dummy/config/environment'
 
 Rails.configuration.database_configuration[db_adapter][rails_env].tap do |c|
   ActiveRecord::Base.establish_connection(c)
@@ -13,7 +13,6 @@ end
 
 require 'rspec/rails'
 require 'rspec/retry'
-require 'mime-types'
 require 'database_cleaner'
 
 class Widget < ActiveRecord::Base

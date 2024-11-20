@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 appraise 'rails-7-0' do
-  gem 'rails', '~> 7.0.0'
+  gem 'activerecord', '~> 7.0.0'
+  gem 'railties', '~> 7.0.0'
 end
 
 appraise 'rails-7-1' do
-  gem 'rails', '~> 7.1.0'
+  gem 'activerecord', '~> 7.1.0'
+  gem 'railties', '~> 7.1.0'
 end
