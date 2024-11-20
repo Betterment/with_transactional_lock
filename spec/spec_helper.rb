@@ -13,7 +13,6 @@ end
 
 require 'rspec/rails'
 require 'rspec/retry'
-require 'mime-types'
 require 'database_cleaner'
 
 class Widget < ActiveRecord::Base

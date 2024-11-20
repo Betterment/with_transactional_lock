@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'appraisal', '~> 2.2.0'
   s.add_development_dependency 'betterlint'
   s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'mime-types'
   s.add_development_dependency 'mysql2'
   s.add_development_dependency 'pg'
   s.add_development_dependency 'rspec-rails'
