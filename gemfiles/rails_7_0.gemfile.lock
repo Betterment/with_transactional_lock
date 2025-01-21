@@ -166,7 +166,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activerecord (~> 7.0.0)
   appraisal
   betterlint
   concurrent-ruby (= 1.3.4)
@@ -179,4 +178,4 @@ DEPENDENCIES
   with_transactional_lock!
 
 BUNDLED WITH
-   2.4.22
+   2.6.3

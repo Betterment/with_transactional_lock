@@ -220,4 +220,4 @@ DEPENDENCIES
   with_transactional_lock!
 
 BUNDLED WITH
-   2.4.22
+   2.6.3
