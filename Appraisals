@@ -2,7 +2,13 @@
 
 appraise 'rails-7-0' do
   gem 'railties', '~> 7.0.0'
+  gem 'base64'
+  gem 'bigdecimal'
+  gem 'benchmark'
   gem 'concurrent-ruby', '1.3.4'
+  gem 'drb'
+  gem 'logger'
+  gem 'mutex_m'
 end
 
 appraise 'rails-7-1' do
