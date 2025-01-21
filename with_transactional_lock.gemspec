@@ -20,8 +20,10 @@ Gem::Specification.new do |s|
 
   s.files = Dir["lib/**/*", "LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency 'activerecord', '>= 7.0', '< 7.2'
-  s.add_dependency 'railties', '>= 7.0', '< 7.2'
+  rails_constraints = ['>= 7.0', '< 8.1']
+
+  s.add_dependency 'activerecord', rails_constraints
+  s.add_dependency 'railties', rails_constraints
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'betterlint'
