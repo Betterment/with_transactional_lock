@@ -7,17 +7,38 @@ describe WithTransactionalLock do
     ActiveRecord::Base.connection.reconnect!
   end
 
+  def assert_pg_lock_comment(&)
+    lock_statements = []
+
+    callback = ->(_name, _start, _finish, _id, payload) do
+      sql = payload.fetch(:sql)
+
+      # match all queries that use a transaction advisory lock
+      lock_statements << sql if sql.include?('pg_advisory_xact_lock')
+    end
+
+    # execute the block and capture the SQL statements
+    ActiveSupport::Notifications.subscribed(callback, 'sql.active_record', &)
+
+    # ensure the lock statements include a comment
+    expect(lock_statements).to all(match(%r{/\* lock:.+? \*/}))
+  end
+
   it 'allows claiming the same lock twice' do
     Widget.create!(name: 'other')
-    Widget.with_transactional_lock('Widget.first') do
-      Widget.first.update!(name: 'once')
+
+    assert_pg_lock_comment do
       Widget.with_transactional_lock('Widget.first') do
-        Widget.first.tap do |w|
-          w.name += 'twice'
-          w.save!
+        Widget.first.update!(name: 'once')
+        Widget.with_transactional_lock('Widget.first') do
+          Widget.first.tap do |w|
+            w.name += 'twice'
+            w.save!
+          end
         end
       end
     end
+
     expect(Widget.first.name).to eq 'oncetwice'
   end
 
@@ -60,11 +81,13 @@ describe WithTransactionalLock do
 
       threads << Thread.new do
         mutex.lock
-        maybe_transactional_lock(locking_enabled, lock_one_name) do
-          widget_created.wait(mutex)
-          Widget.find_by!(name: "foo").destroy
-          mutex.unlock
-          sleep 2
+        assert_pg_lock_comment do
+          maybe_transactional_lock(locking_enabled, lock_one_name) do
+            widget_created.wait(mutex)
+            Widget.find_by!(name: "foo").destroy
+            mutex.unlock
+            sleep 2
+          end
         end
       end
 
@@ -74,8 +97,10 @@ describe WithTransactionalLock do
           Widget.create!(name: "foo")
           widget_created.signal
         end
-        maybe_transactional_lock(locking_enabled, lock_two_name) do
-          result = Widget.where(name: "foo").empty?
+        assert_pg_lock_comment do
+          maybe_transactional_lock(locking_enabled, lock_two_name) do
+            result = Widget.where(name: "foo").empty?
+          end
         end
       end
 

@@ -57,7 +57,7 @@ module WithTransactionalLock
       private
 
       def acquire_lock
-        connection.execute("SELECT pg_advisory_xact_lock(#{connection.quote(db_lock_name)})")
+        connection.execute("/* lock:#{lock_name} */ SELECT pg_advisory_xact_lock(#{connection.quote(db_lock_name)})")
       end
     end
   end
