@@ -59,8 +59,8 @@ module WithTransactionalLock
       private
 
       def acquire_lock
-        connection.execute("insert into transactional_advisory_locks values (#{connection.quote(db_lock_name)}) \
-        on duplicate key update lock_id = lock_id")
+        connection.execute("INSERT INTO transactional_advisory_locks VALUES (#{connection.quote(db_lock_name)}) \
+        ON DUPLICATE KEY UPDATE lock_id = lock_id")
       end
     end
 
@@ -68,7 +68,7 @@ module WithTransactionalLock
       private
 
       def acquire_lock
-        connection.execute("select pg_advisory_xact_lock(#{connection.quote(db_lock_name)})")
+        connection.execute("SELECT pg_advisory_xact_lock(#{connection.quote(db_lock_name)})")
       end
     end
   end
