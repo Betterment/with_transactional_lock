@@ -23,8 +23,6 @@ module WithTransactionalLock
       def self.locate(connection)
         adapter = connection.adapter_name.downcase.to_sym
         case adapter
-        when :mysql, :mysql2
-          MySqlAdvisoryLock
         when :postgresql
           PostgresAdvisoryLock
         else
@@ -52,15 +50,6 @@ module WithTransactionalLock
 
       def db_lock_name
         @db_lock_name ||= Digest::SHA256.digest(lock_name)[0, 8].unpack1('q')
-      end
-    end
-
-    class MySqlAdvisoryLock < AdvisoryLockBase
-      private
-
-      def acquire_lock
-        connection.execute("insert into transactional_advisory_locks values (#{connection.quote(db_lock_name)}) \
-        on duplicate key update lock_id = lock_id")
       end
     end
 

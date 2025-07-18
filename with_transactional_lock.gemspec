@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.email       = ["sam@betterment.com"]
   s.homepage    = "https://github.com/Betterment/with_transactional_lock"
   s.summary     = "Transactional advisory locks for ActiveRecord"
-  s.description = "Advisory locking support for MySQL and Postgresql done right."
+  s.description = "Advisory locking support for Postgresql done right."
   s.license     = "MIT"
   s.metadata['allowed_push_host'] = 'https://rubygems.org'
   s.metadata['rubygems_mfa_required'] = 'true' # in case we ever use rubygems
@@ -28,7 +28,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'betterlint'
   s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'mysql2'
   s.add_development_dependency 'pg'
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'rspec-retry'
