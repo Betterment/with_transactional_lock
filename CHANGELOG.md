@@ -7,6 +7,10 @@ and this project aims to adhere to [Semantic Versioning](http://semver.org/spec/
 
 ## [3.0.0]
 
+### Changed
+
+- feat: add lock name to SQL to trace the source (#27)
+
 ### Removed
 
-- Removed support for mysql
+- Removed support for mysql (#26)
