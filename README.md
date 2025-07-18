@@ -1,14 +1,14 @@
 # with_transactional_lock
 
 A simple extension to ActiveRecord for performing advisory locking on
-MySQL and PostgreSQL.
+PostgreSQL.
 
 An advisory lock is a database-level mutex that can be used to prevent
 concurrent access to a shared resource or to prevent two workers from
 performing the same process concurrently.
 
 This gem is different from other advisory locking gems because it
-uses advisory transaction locks instead of advisory session locks. 
+uses advisory transaction locks instead of advisory session locks.
 
 ## Why transactional?
 
@@ -31,7 +31,7 @@ preventing leaks.
 Additionally, application developers tend to think about discrete units
 of database work in terms of transactions. By leveraging the transaction
 boundary, we ensure the advisory lock is released at the earliest
-possible moment that it can be and no sooner. 
+possible moment that it can be and no sooner.
 
 ## Lock acquisition efficiency & fairness
 
@@ -60,24 +60,15 @@ waiting on I/O (possibly allowing another thread to use the CPU).
 
 Add this line to your application's Gemfile:
 
-``` ruby
+```ruby
 gem 'with_transactional_lock'
 ```
 
 And then bundle install:
 
 ```
-$ bundle install
+bundle install
 ```
-
-And then if you're using MySQL, you will need to run the installer:
-
-```
-$ rails g with_transactional_lock:install
-```
-
-This will create a migration that will add an
-`transactional_advisory_locks` table to your database.
 
 ## Usage
 
@@ -92,12 +83,12 @@ ActiveRecord::Base.with_transactional_lock('name_of_a_resource') do
 end
 ```
 
-This call will attempt to acquire an exclusive lock using the provided 
+This call will attempt to acquire an exclusive lock using the provided
 lock name. It will wait indefinitely for that lock -- or at least as
 long as your database connection timeout is willing to allow. Once the
 lock is acquired you will have exclusive ownership of the advisory lock
 with the name that you provided. Your block is free to execute its
-critical work. Upon completion of your transaction, the lock will be 
+critical work. Upon completion of your transaction, the lock will be
 released.
 
 ## Supported databases
@@ -108,15 +99,6 @@ PostgreSQL has first-class support for transactional advisory locks via
 `pg_advisory_xact_lock`. This is an exclusive lock that is held for the
 duration of a given transaction and automatically released upon
 transaction commit.
-
-### MySQL
-
-MySQL does not have built-in support for transactional advisory locks.
-So, MySQL gets a special treatment. We emulate the behavior of PostgreSQL
-using a special `transactional_advisory_locks` table with a unique index 
-on the `lock_id` column. This allows us to provide the same transactional 
-and mutual exclusivity guarantees as PostgreSQL. The trade-off is that 
-you need to add another table to your database.
 
 ## License
 

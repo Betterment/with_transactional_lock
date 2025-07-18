@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ['3.2', '3.3', '3.4']
+        ruby: ["3.2", "3.3", "3.4"]
         gemfile:
           - gemfiles/rails_7_0.gemfile
           - gemfiles/rails_7_1.gemfile
@@ -35,25 +35,15 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: with_transactional_lock_test
-          DB_ADAPTER: mysql
-        ports:
-            - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
-    - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
-    - uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 # v1
-      env:
-        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Run tests
-      env:
-        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
-      run: bundle exec rake
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+      - uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 # v1
+        env:
+          BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Run tests
+        env:
+          BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+        run: bundle exec rake

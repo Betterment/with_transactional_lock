@@ -5,33 +5,17 @@ default: &default
 postgresql:
   development: &pg_default
     <<: *default
-    adapter: 'postgresql'
-    database: 'with_transactional_lock_development'
+    adapter: "postgresql"
+    database: "with_transactional_lock_development"
   test: &pg_test
     <<: *default
-    adapter: 'postgresql'
+    adapter: "postgresql"
     username: <%= ENV['POSTGRES_USER'] %>
     host: localhost
-    database: 'with_transactional_lock_test'
-
-mysql:
-  development: &mysql_default
-    <<: *default
-    adapter: 'mysql2'
-    encoding: 'utf8mb4'
-    host: '127.0.0.1'
-    username: 'root'
-    database: 'with_transactional_lock_development'
-  test: &mysql_test
-    <<: *default
-    adapter: 'mysql2'
-    encoding: 'utf8mb4'
-    host: '127.0.0.1'
-    username: 'root'
-    database: 'with_transactional_lock_test'
+    database: "with_transactional_lock_test"
 
 development:
-  <<: *mysql_default
+  <<: *pg_default
 
 test:
-  <<: *mysql_test
+  <<: *pg_test
