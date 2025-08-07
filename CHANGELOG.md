@@ -9,4 +9,8 @@ and this project aims to adhere to [Semantic Versioning](http://semver.org/spec/
 
 ### Removed
 
-- Removed support for mysql
+- Removed support for mysql (https://github.com/Betterment/with_transactional_lock/pull/26)
+
+### Added
+
+- Added lock name to SQL to trace the source (https://github.com/Betterment/with_transactional_lock/pull/27)
