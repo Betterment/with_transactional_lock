@@ -22,7 +22,7 @@ load 'rails/tasks/statistics.rake'
 
 Bundler::GemHelper.install_tasks
 
-if (Rails.env.development? || Rails.env.test?) && defined? Dummy
+if Rails.env.local? && defined? Dummy
   require 'rspec/core'
   require 'rspec/core/rake_task'
   require 'rubocop/rake_task'
