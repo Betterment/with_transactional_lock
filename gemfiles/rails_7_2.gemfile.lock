@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    with_transactional_lock (3.1.0)
+    with_transactional_lock (3.2.0)
       activerecord (>= 7.2, < 8.2)
       railties (>= 7.2, < 8.2)
 
