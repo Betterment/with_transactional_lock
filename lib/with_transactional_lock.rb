@@ -4,6 +4,7 @@ require "with_transactional_lock/engine"
 
 module WithTransactionalLock
   extend ActiveSupport::Autoload
+
   autoload :Mixin
 end
 

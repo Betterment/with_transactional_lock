@@ -5,6 +5,7 @@ require 'active_support/concern'
 module WithTransactionalLock
   module Mixin
     extend ActiveSupport::Concern
+
     delegate :with_transactional_lock, to: :class
 
     module ClassMethods
