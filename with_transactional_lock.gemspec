@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.metadata['allowed_push_host'] = 'https://rubygems.org'
   s.metadata['rubygems_mfa_required'] = 'true' # in case we ever use rubygems
 
-  s.files = Dir["lib/**/*", "LICENSE", "Rakefile", "README.md"]
+  s.files = Dir["lib/**/*", "rbi/**/*", "LICENSE", "Rakefile", "README.md"]
 
   rails_constraints = ['>= 7.2', '< 8.2']
 
