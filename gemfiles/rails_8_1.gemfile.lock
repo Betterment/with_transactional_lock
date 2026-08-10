@@ -1,9 +1,9 @@
 PATH
   remote: ..
   specs:
-    with_transactional_lock (3.2.0)
-      activerecord (>= 7.2, < 8.2)
-      railties (>= 7.2, < 8.2)
+    with_transactional_lock (3.3.0)
+      activerecord (>= 8.0, < 8.2)
+      railties (>= 8.0, < 8.2)
 
 GEM
   remote: https://rubygems.org/
