@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["lib/**/*", "LICENSE", "Rakefile", "README.md"]
 
-  rails_constraints = ['>= 7.2', '< 8.2']
+  rails_constraints = ['>= 8.0', '< 8.2']
 
   s.add_dependency 'activerecord', rails_constraints
   s.add_dependency 'railties', rails_constraints
@@ -32,5 +32,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'rspec-retry'
 
-  s.required_ruby_version = '>= 3.2'
+  s.required_ruby_version = '>= 3.3'
 end
